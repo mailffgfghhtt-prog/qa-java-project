@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Burger.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">untitled</a> &gt; <a href="index.source.html" class="el_package">praktikum</a> &gt; <span class="el_source">Burger.java</span></div><h1>Burger.java</h1><pre class="source lang-java linenums">package praktikum;
+
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="fc" id="L6">public class Burger {</span>
+    public Bun bun;
+<span class="fc" id="L8">    private int bunCount = 2; // По умолчанию — две булочки</span>
+<span class="fc" id="L9">    private List&lt;Ingredient&gt; ingredients = new ArrayList&lt;&gt;();</span>
+
+    public void setBuns(Bun bun) {
+<span class="fc" id="L12">        this.bun = bun;</span>
+<span class="fc" id="L13">    }</span>
+
+    /**
+     * Устанавливает количество булочек в бургере.
+     * @param count количество булочек (должно быть ≥ 0)
+     */
+    public void setBunCount(int count) {
+<span class="pc bpc" id="L20" title="1 of 2 branches missed.">        if (count &gt;= 0) {</span>
+<span class="fc" id="L21">            this.bunCount = count;</span>
+        }
+<span class="fc" id="L23">    }</span>
+
+    public void addIngredient(Ingredient ingredient) {
+<span class="fc" id="L26">        ingredients.add(ingredient);</span>
+<span class="fc" id="L27">    }</span>
+
+    public void removeIngredient(int index) {
+<span class="fc bfc" id="L30" title="All 4 branches covered.">        if (index &gt;= 0 &amp;&amp; index &lt; ingredients.size()) {</span>
+<span class="fc" id="L31">            ingredients.remove(index);</span>
+        }
+<span class="fc" id="L33">    }</span>
+
+    public void moveIngredient(int fromIndex, int toIndex) {
+<span class="pc bpc" id="L36" title="3 of 6 branches missed.">        if (fromIndex &gt;= 0 &amp;&amp; fromIndex &lt; ingredients.size() &amp;&amp;</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">                toIndex &gt;= 0 &amp;&amp; toIndex &lt; ingredients.size()) {</span>
+<span class="fc" id="L38">            Ingredient ingredient = ingredients.remove(fromIndex);</span>
+<span class="fc" id="L39">            ingredients.add(toIndex, ingredient);</span>
+        }
+<span class="fc" id="L41">    }</span>
+
+
+    public float getPrice() {
+<span class="fc" id="L45">        float totalPrice = 0;</span>
+
+        // Добавляем цену булочек: количество × цена одной
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (bun != null) {</span>
+<span class="fc" id="L49">            totalPrice += bun.getPrice() * bunCount;</span>
+        }
+
+        // Добавляем цены ингредиентов (пропускаем null)
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        for (Ingredient ingredient : ingredients) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            if (ingredient != null) {</span>
+<span class="fc" id="L55">                totalPrice += ingredient.getPrice();</span>
+            }
+<span class="fc" id="L57">        }</span>
+
+<span class="fc" id="L59">        return totalPrice;</span>
+    }
+
+    public String getReceipt() {
+<span class="fc" id="L63">        StringBuilder receipt = new StringBuilder();</span>
+
+        // Булочка (верхняя)
+<span class="pc bpc" id="L66" title="1 of 4 branches missed.">        if (bun != null &amp;&amp; bunCount &gt; 0) {</span>
+<span class="fc" id="L67">            receipt.append(&quot;(==== &quot;).append(bun.getName()).append(&quot; ====)\n&quot;);</span>
+        } else {
+<span class="fc" id="L69">            receipt.append(&quot;(==== BUN MISSING ====)\n&quot;);</span>
+        }
+
+        // Ингредиенты
+<span class="fc" id="L73">        boolean hasValidIngredients = false;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        for (Ingredient ingredient : ingredients) {</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">            if (ingredient != null) {</span>
+<span class="fc" id="L76">                hasValidIngredients = true;</span>
+<span class="fc" id="L77">                receipt.append(&quot;= &quot;).append(ingredient.getName())</span>
+<span class="fc" id="L78">                        .append(&quot; (&quot;).append(ingredient.getType())</span>
+<span class="fc" id="L79">                        .append(&quot;)\n&quot;);</span>
+            }
+<span class="fc" id="L81">        }</span>
+
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (!hasValidIngredients) {</span>
+<span class="fc" id="L84">            receipt.append(&quot;= no ingredients =\n&quot;);</span>
+        }
+
+        // Нижняя булочка (если больше одной)
+<span class="pc bpc" id="L88" title="1 of 4 branches missed.">        if (bun != null &amp;&amp; bunCount &gt; 1) {</span>
+<span class="fc" id="L89">            receipt.append(&quot;(==== &quot;).append(bun.getName()).append(&quot; ====)\n&quot;);</span>
+        }
+
+        // Цена
+<span class="fc" id="L93">        receipt.append(&quot;\nPrice: &quot;).append(getPrice());</span>
+
+<span class="fc" id="L95">        return receipt.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

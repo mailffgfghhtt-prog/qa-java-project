@@ -3,19 +3,23 @@ package praktikum;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Модель бургера.
- * Бургер состоит из булочек и ингредиентов (начинка или соус).
- * Ингредиенты можно перемещать и удалять.
- * Можно распечать чек с информацией о бургере.
- */
 public class Burger {
-
     public Bun bun;
-    public List<Ingredient> ingredients = new ArrayList<>();
+    private int bunCount = 2; // По умолчанию — две булочки
+    private List<Ingredient> ingredients = new ArrayList<>();
 
     public void setBuns(Bun bun) {
         this.bun = bun;
+    }
+
+    /**
+     * Устанавливает количество булочек в бургере.
+     * @param count количество булочек (должно быть ≥ 0)
+     */
+    public void setBunCount(int count) {
+        if (count >= 0) {
+            this.bunCount = count;
+        }
     }
 
     public void addIngredient(Ingredient ingredient) {
@@ -23,35 +27,71 @@ public class Burger {
     }
 
     public void removeIngredient(int index) {
-        ingredients.remove(index);
+        if (index >= 0 && index < ingredients.size()) {
+            ingredients.remove(index);
+        }
     }
 
-    public void moveIngredient(int index, int newIndex) {
-        ingredients.add(newIndex, ingredients.remove(index));
+    public void moveIngredient(int fromIndex, int toIndex) {
+        if (fromIndex >= 0 && fromIndex < ingredients.size() &&
+                toIndex >= 0 && toIndex < ingredients.size()) {
+            Ingredient ingredient = ingredients.remove(fromIndex);
+            ingredients.add(toIndex, ingredient);
+        }
     }
+
 
     public float getPrice() {
-        float price = bun.getPrice() * 2;
+        float totalPrice = 0;
 
-        for (Ingredient ingredient : ingredients) {
-            price += ingredient.getPrice();
+        // Добавляем цену булочек: количество × цена одной
+        if (bun != null) {
+            totalPrice += bun.getPrice() * bunCount;
         }
 
-        return price;
+        // Добавляем цены ингредиентов (пропускаем null)
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient != null) {
+                totalPrice += ingredient.getPrice();
+            }
+        }
+
+        return totalPrice;
     }
 
     public String getReceipt() {
-        StringBuilder receipt = new StringBuilder(String.format("(==== %s ====)%n", bun.getName()));
+        StringBuilder receipt = new StringBuilder();
 
-        for (Ingredient ingredient : ingredients) {
-            receipt.append(String.format("= %s %s =%n", ingredient.getType().toString().toLowerCase(),
-                    ingredient.getName()));
+        // Булочка (верхняя)
+        if (bun != null && bunCount > 0) {
+            receipt.append("(==== ").append(bun.getName()).append(" ====)\n");
+        } else {
+            receipt.append("(==== BUN MISSING ====)\n");
         }
 
-        receipt.append(String.format("(==== %s ====)%n", bun.getName()));
-        receipt.append(String.format("%nPrice: %f%n", getPrice()));
+        // Ингредиенты
+        boolean hasValidIngredients = false;
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient != null) {
+                hasValidIngredients = true;
+                receipt.append("= ").append(ingredient.getName())
+                        .append(" (").append(ingredient.getType())
+                        .append(")\n");
+            }
+        }
+
+        if (!hasValidIngredients) {
+            receipt.append("= no ingredients =\n");
+        }
+
+        // Нижняя булочка (если больше одной)
+        if (bun != null && bunCount > 1) {
+            receipt.append("(==== ").append(bun.getName()).append(" ====)\n");
+        }
+
+        // Цена
+        receipt.append("\nPrice: ").append(getPrice());
 
         return receipt.toString();
     }
-
 }

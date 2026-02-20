@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Database.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">untitled</a> &gt; <a href="index.source.html" class="el_package">praktikum</a> &gt; <span class="el_source">Database.java</span></div><h1>Database.java</h1><pre class="source lang-java linenums">package praktikum;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Database {
+<span class="fc" id="L7">    private List&lt;Ingredient&gt; ingredients = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L9">    public Database() {</span>
+<span class="fc" id="L10">        addIngredient(new Ingredient(&quot;hot sauce&quot;, 50.0F, IngredientType.SAUCE));</span>
+<span class="fc" id="L11">        addIngredient(new Ingredient(&quot;chili sauce&quot;, 60.0F, IngredientType.SAUCE));</span>
+<span class="fc" id="L12">        addIngredient(new Ingredient(&quot;cutlet&quot;, 100.0F, IngredientType.FILLING));</span>
+<span class="fc" id="L13">        addIngredient(new Ingredient(&quot;lettuce&quot;, 20.0F, IngredientType.VEGETABLE));</span>
+<span class="fc" id="L14">        addIngredient(new Ingredient(&quot;cheese&quot;, 30.0F, IngredientType.CHEESE));</span>
+<span class="fc" id="L15">        addIngredient(new Ingredient(&quot;onion&quot;, 10.0F, IngredientType.VEGETABLE));</span>
+<span class="fc" id="L16">    }</span>
+
+    public void addIngredient(Ingredient ingredient) {
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">        if (ingredient != null) {</span>
+<span class="fc" id="L20">            ingredients.add(ingredient);</span>
+        }
+<span class="fc" id="L22">    }</span>
+
+    public List&lt;Ingredient&gt; availableIngredients() {
+<span class="fc" id="L25">        return new ArrayList&lt;&gt;(ingredients);</span>
+    }
+
+    // Дополнительный метод для работы с булочками (решает ошибку в Praktikum.java)
+    public List&lt;Bun&gt; availableBuns() {
+<span class="fc" id="L30">        List&lt;Bun&gt; buns = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L31">        buns.add(new Bun(&quot;black bun&quot;, 200.0F));</span>
+<span class="fc" id="L32">        buns.add(new Bun(&quot;white bun&quot;, 150.0F));</span>
+<span class="fc" id="L33">        return buns;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

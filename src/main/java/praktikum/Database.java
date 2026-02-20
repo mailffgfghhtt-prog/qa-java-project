@@ -3,34 +3,33 @@ package praktikum;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Класс с методами по работе с базой данных.
- */
 public class Database {
-
-    private final List<Bun> buns = new ArrayList<>();
-    private final List<Ingredient> ingredients = new ArrayList<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
 
     public Database() {
-        buns.add(new Bun("black bun", 100));
-        buns.add(new Bun("white bun", 200));
-        buns.add(new Bun("red bun", 300));
-
-        ingredients.add(new Ingredient(IngredientType.SAUCE, "hot sauce", 100));
-        ingredients.add(new Ingredient(IngredientType.SAUCE, "sour cream", 200));
-        ingredients.add(new Ingredient(IngredientType.SAUCE, "chili sauce", 300));
-
-        ingredients.add(new Ingredient(IngredientType.FILLING, "cutlet", 100));
-        ingredients.add(new Ingredient(IngredientType.FILLING, "dinosaur", 200));
-        ingredients.add(new Ingredient(IngredientType.FILLING, "sausage", 300));
+        addIngredient(new Ingredient("hot sauce", 50.0F, IngredientType.SAUCE));
+        addIngredient(new Ingredient("chili sauce", 60.0F, IngredientType.SAUCE));
+        addIngredient(new Ingredient("cutlet", 100.0F, IngredientType.FILLING));
+        addIngredient(new Ingredient("lettuce", 20.0F, IngredientType.VEGETABLE));
+        addIngredient(new Ingredient("cheese", 30.0F, IngredientType.CHEESE));
+        addIngredient(new Ingredient("onion", 10.0F, IngredientType.VEGETABLE));
     }
 
-    public List<Bun> availableBuns() {
-        return buns;
+    public void addIngredient(Ingredient ingredient) {
+        if (ingredient != null) {
+            ingredients.add(ingredient);
+        }
     }
 
     public List<Ingredient> availableIngredients() {
-        return ingredients;
+        return new ArrayList<>(ingredients);
     }
 
+    // Дополнительный метод для работы с булочками (решает ошибку в Praktikum.java)
+    public List<Bun> availableBuns() {
+        List<Bun> buns = new ArrayList<>();
+        buns.add(new Bun("black bun", 200.0F));
+        buns.add(new Bun("white bun", 150.0F));
+        return buns;
+    }
 }

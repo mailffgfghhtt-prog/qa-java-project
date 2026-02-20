@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Praktikum.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">untitled</a> &gt; <a href="index.source.html" class="el_package">praktikum</a> &gt; <span class="el_source">Praktikum.java</span></div><h1>Praktikum.java</h1><pre class="source lang-java linenums">package praktikum;
+
+import java.util.List;
+
+public class Praktikum {
+    /**
+     * Приватный конструктор для предотвращения создания экземпляров класса.
+     * Класс содержит только статические методы.
+     */
+<span class="fc" id="L10">    private Praktikum() {</span>
+<span class="fc" id="L11">        throw new UnsupportedOperationException(&quot;Utility class cannot be instantiated&quot;);</span>
+    }
+
+    public static void main(String[] args) {
+<span class="fc" id="L15">        Database database = new Database();</span>
+<span class="fc" id="L16">        List&lt;Ingredient&gt; ingredients = database.availableIngredients();</span>
+<span class="fc" id="L17">        List&lt;Bun&gt; buns = database.availableBuns();</span>
+
+<span class="fc" id="L19">        printIngredients(ingredients);</span>
+<span class="fc" id="L20">        printBuns(buns);</span>
+<span class="fc" id="L21">    }</span>
+
+    /**
+     * Выводит список ингредиентов в консоль
+     */
+    public static void printIngredients(List&lt;Ingredient&gt; ingredients) {
+<span class="fc" id="L27">        System.out.println(&quot;Доступные ингредиенты:&quot;);</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if (ingredients.isEmpty()) {</span>
+<span class="fc" id="L29">            System.out.println(&quot;- Нет доступных ингредиентов&quot;);</span>
+<span class="fc" id="L30">            return;</span>
+        }
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        for (Ingredient ingredient : ingredients) {</span>
+<span class="fc" id="L33">            System.out.println(&quot;- &quot; + ingredient.getName() + &quot; (&quot; + ingredient.getType() + &quot;)&quot;);</span>
+<span class="fc" id="L34">        }</span>
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * Выводит список булочек в консоль
+     */
+    public static void printBuns(List&lt;Bun&gt; buns) {
+<span class="fc" id="L41">        System.out.println(&quot;\nДоступные булочки:&quot;);</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (buns.isEmpty()) {</span>
+<span class="fc" id="L43">            System.out.println(&quot;- Нет доступных булочек&quot;);</span>
+<span class="fc" id="L44">            return;</span>
+        }
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        for (Bun bun : buns) {</span>
+<span class="fc" id="L47">            System.out.println(&quot;- &quot; + bun.getName() + &quot; (цена: &quot; + bun.getPrice() + &quot;)&quot;);</span>
+<span class="fc" id="L48">        }</span>
+<span class="fc" id="L49">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
